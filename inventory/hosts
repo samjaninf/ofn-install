@@ -151,6 +151,14 @@ fr-prod
 uk-prod
 de-prod
 
+# Harvest To Order
+
+[hto-prod]
+www.harvesttoorder.com
+
+[hto:children]
+hto-prod
+
 #------------------------------------------------------------------------------
 # America
 
@@ -191,3 +199,4 @@ fr
 de
 be
 za
+hto
