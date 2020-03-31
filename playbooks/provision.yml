@@ -25,9 +25,9 @@
     - include: ../roles/shared_handlers/handlers/main.yml
 
   roles:
-    - role: ssh_keys # Add sysadmin ssh keys to server
-      become: yes
-      tags: ssh_keys
+#    - role: ssh_keys # Add sysadmin ssh keys to server
+#      become: yes
+#      tags: ssh_keys
 
     - role: geerlingguy.security
       become: yes
