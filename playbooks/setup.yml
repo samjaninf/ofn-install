@@ -17,14 +17,14 @@
       tags: skip_ansible_lint
 
 # Add the default user and ssh keys as root
-- name: set up default_user
-  hosts: ofn_servers
-  remote_user: root
-  roles:
-    - role: default_user
-      become: yes
-      tags: default_user
+#- name: set up default_user
+#  hosts: ofn_servers
+#  remote_user: root
+#  roles:
+#    - role: default_user
+#      become: yes
+#      tags: default_user
 
-    - role: ssh_keys
-      become: yes
-      tags: ssh_keys
+#    - role: ssh_keys
+#      become: yes
+#      tags: ssh_keys
