@@ -1,22 +1,22 @@
 ---
 
 # See https://github.com/openfoodfoundation/ofn-install/wiki/Setup for more info
-checkout_zone:
-country_code:
-currency:
-locale: en                  # Default locale for OFN instance
-available_locales: en,es    # Available locales for OFN instance
+checkout_zone: USA
+country_code: US
+currency: USD
+locale: en_US                  # Default locale for OFN instance
+available_locales: en       # Available locales for OFN instance
 language: en_US.UTF-8       # Default language for the server
 language_packages:          # Language packages for the server
   - language-pack-en-base
-l10n_repo: https://github.com/openfoodfoundation/l10n_au.git
-timezone:
+l10n_repo: https://github.com/samjaninf/l10n_us.git
+timezone: 'Eastern Time (US & Canada)'
 
 
 # Used for the LetsEncrypt email setting
-developer_email: <dev email>
+developer_email: admin@pegas.io
 
 # Users listed here will have their key from /files/keys added to the unicorn_user
 users_sysadmin:
-  - <username>
+    - richard
 
