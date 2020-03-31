@@ -3,7 +3,7 @@
 domain: www.harvesttoorder.com
 host_id: hto-prod # country initials (eg uk, es, de) and environment (default is prod)
 rails_env: production
-security_ssh_permit_root_login: yes
+security_ssh_permit_root_login: 'yes'
 
 admin_email: admin@pegas.io
 
