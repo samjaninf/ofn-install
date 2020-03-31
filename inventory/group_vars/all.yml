@@ -16,7 +16,8 @@ deployment_user: ofn-deploy
 ssh_pubkey: "{{ lookup('file', '~/.ssh/{{ ssh_pubkey_name }}') }}"
 
 # You can paste the repo/branch straight from a github PR here, like: "Contributor22:new_feature"
-github_key: openfoodfoundation:master
+#github_key: openfoodfoundation:master
+github_key: samjaninf:harvest2order
 
 git_repo: "https://github.com/{{ github_key.split(':')[0] }}/openfoodnetwork.git"
 git_version: "{{ github_key.split(':')[1] }}"
@@ -141,19 +142,7 @@ logrotate_applications:
           - "{{ current_path }}/log/*.log"
         options:
           - weekly        # rotate weekly
-          - rotate 4      # delete logs older than 4 rotations
-          - compress      # compress rotated logs
-          - missingok     # ignore missing logs
-          - notifempty    # don't rotate if empty
-          - copytruncate  # copy the log, then empty the active logfile
-
-  - name: unicorn
-    definitions:
-      - logs:
-          - "{{ shared_path }}/log/unicorn.log"
-        options:
-          - weekly        # rotate weekly
-          - rotate 4      # delete logs older than 4 rotations
+          - rotate 4     # delete logs older than 4 rotations
           - compress      # compress rotated logs
           - missingok     # ignore missing logs
           - notifempty    # don't rotate if empty
@@ -180,8 +169,6 @@ unicorn_pid: "{{ pid_path }}/unicorn.pid"
 unicorn_sock: "{{ sock_path }}/unicorn.{{ app }}.sock"
 unicorn_workers: 2
 unicorn_timeout: 30
-unicorn_env_vars: |
-  KILL_UNICORNS=true
 
 #----------------------------------------------------------------------
 # Memcached variables
@@ -191,12 +178,13 @@ memcached_value_max_megabytes: 4
 # Core devs: users named here will have SSH access on all instances
 
 core_devs:
-  - maikel
-  - pau
-  - enricostn
-  - luis
-  - matt
-  - kristina
+  - richard
+#  - maikel
+#  - pau
+#  - enricostn
+#  - luis
+#  - matt
+#  - kristina
 
 #----------------------------------------------------------------------
 # nginx config
