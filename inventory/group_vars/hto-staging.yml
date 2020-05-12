@@ -11,6 +11,7 @@ language_packages:          # Language packages for the server
   - language-pack-en-base
 l10n_repo: https://github.com/samjaninf/l10n_us.git
 timezone: 'Eastern Time (US & Canada)'
+security_ssh_permit_root_login: "yes"
 
 
 # Used for the LetsEncrypt email setting

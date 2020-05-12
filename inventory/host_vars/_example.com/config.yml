@@ -3,7 +3,6 @@
 domain: example.com
 host_id: es-prod # country initials (eg uk, es, de) and environment (default is prod)
 rails_env: production
-security_ssh_permit_root_login: 'yes'
 
 admin_email: admin@example.com
 
@@ -19,7 +18,7 @@ mail_domain: example.com
 
 # Size in bytes. You can also use units like 1G, 512MiB or 1000KB. See: `man fallocate`
 # The default is `false`, not installing a swapfile.
-#swapfile_size: 1G
+swapfile_size: 1G
 
 # Enable external database access for third party integrations
 #postgres_listen_addresses:
