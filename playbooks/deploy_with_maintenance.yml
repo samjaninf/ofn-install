@@ -12,7 +12,6 @@
 # maintenance page, which should be through the maintenance_mode_message var
 # using the -e flag.
 ---
-
 - name: v2 deploy
   hosts: ofn_servers
   remote_user: "{{ user }}"
@@ -24,72 +23,72 @@
 
   tasks:
     - block:
-      - name: enable maintenance mode
-        import_role:
-          name: maintenance_mode
-          tasks_from: enable
+        - name: enable maintenance mode
+          import_role:
+            name: maintenance_mode
+            tasks_from: enable
 
-      - name: stop unicorn
-        service:
-          name: unicorn_{{ app }}
-          state: stopped
-        become: yes
-        become_user: root
+        - name: stop unicorn
+          service:
+            name: unicorn_{{ app }}
+            state: stopped
+          become: yes
+          become_user: root
 
-      - name: stop delayed job
-        service:
-          name: delayed_job_{{ app }}
-          state: stopped
-        become: yes
-        become_user: root
+        - name: stop delayed job
+          service:
+            name: delayed_job_{{ app }}
+            state: stopped
+          become: yes
+          become_user: root
 
-      - include_role:
-          name: deploy
+        - include_role:
+            name: deploy
 
-      - meta: flush_handlers # Ensure handlers run successfully before reporting success
+        - meta: flush_handlers # Ensure handlers run successfully before reporting success
 
-      - name: refresh products cache
-        command: "{{ bundle_path }} exec rake ofn:cache:warm_products"
-        args:
-          chdir: "{{ current_path }}"
+        - name: refresh products cache
+          command: "{{ bundle_path }} exec rake ofn:cache:warm_products"
+          args:
+            chdir: "{{ current_path }}"
 
-      - name: disable maintenance mode
-        import_role:
-          name: maintenance_mode
-          tasks_from: disable
+        - name: disable maintenance mode
+          import_role:
+            name: maintenance_mode
+            tasks_from: disable
 
-      - name: Notify Slack of successful deployment
-        slack:
-          token: "T02G54U79/BF25P9F7A/DJdtYaLLUpRJPiu72d8NqgGg"
-          msg: '`{{ git_version }}` deployed to {{ inventory_hostname }}'
-          channel: "#devops-notifications"
-          username: "ansible executed by {{ lookup('env','USER') }}"
-        when: inventory_hostname not in groups['local']
+        # - name: Notify Slack of successful deployment
+        #   slack:
+        #     token: "T02G54U79/BF25P9F7A/DJdtYaLLUpRJPiu72d8NqgGg"
+        #     msg: '`{{ git_version }}` deployed to {{ inventory_hostname }}'
+        #     channel: "#devops-notifications"
+        #     username: "ansible executed by {{ lookup('env','USER') }}"
+        #   when: inventory_hostname not in groups['local']
 
-      - name: Notify datadog
-        uri:
-          url: "https://api.datadoghq.com/api/v1/events?api_key={{ datadog_key }}"
-          method: POST
-          body:
-            title: "Deployed"
-            text: "Successful deployment on host: {{ inventory_hostname }} ({{ host_id | default(ansible_limit) }})"
-            host: "{{ inventory_hostname }}"
-            tags:
-              - "deployed"
-          body_format: json
-          status_code: 202
-          headers:
-            Content-Type: "application/json"
-        when: datadog_key is defined and inventory_hostname not in groups['local']
+        # - name: Notify datadog
+        #   uri:
+        #     url: "https://api.datadoghq.com/api/v1/events?api_key={{ datadog_key }}"
+        #     method: POST
+        #     body:
+        #       title: "Deployed"
+        #       text: "Successful deployment on host: {{ inventory_hostname }} ({{ host_id | default(ansible_limit) }})"
+        #       host: "{{ inventory_hostname }}"
+        #       tags:
+        #         - "deployed"
+        #     body_format: json
+        #     status_code: 202
+        #     headers:
+        #       Content-Type: "application/json"
+        #   when: datadog_key is defined and inventory_hostname not in groups['local']
 
-      rescue:
-        - name: Notify slack of deployment failure
-          slack:
-            token: "T02G54U79/BF25P9F7A/DJdtYaLLUpRJPiu72d8NqgGg"
-            msg: 'Deployment FAILED for {{ inventory_hostname }}'
-            channel: "#devops-notifications"
-            username: "ansible executed by {{ lookup('env','USER') }}"
-          when: inventory_hostname not in groups['local']
+        # rescue:
+        #   - name: Notify slack of deployment failure
+        #     slack:
+        #       token: "T02G54U79/BF25P9F7A/DJdtYaLLUpRJPiu72d8NqgGg"
+        #       msg: 'Deployment FAILED for {{ inventory_hostname }}'
+        #       channel: "#devops-notifications"
+        #       username: "ansible executed by {{ lookup('env','USER') }}"
+        #   when: inventory_hostname not in groups['local']
 
         - debug:
             msg: Deployment failed
