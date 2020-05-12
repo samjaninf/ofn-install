@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 
 domain: staging.harvesttoorder.com
@@ -29,3 +30,36 @@ swapfile_size: 1G
 #
 #custom_application_env_vars: |
 #  OFN_FEATURE_CONNECT_AND_LEARN: "true"
+=======
+---
+
+domain: staging.harvesttoorder.com
+host_id: hto-staging # country initials (eg uk, es, de) and environment (default is prod)
+rails_env: staging
+
+admin_email: admin@pegas.io
+
+mail_domain: pegas.io
+
+# Optional list of subdomains to register in letsencrypt certificate
+# Defaults to {{ domain }} if list is undefined
+#
+#certbot_domains:
+
+unicorn_workers: 1
+unicorn_timeout: 120
+
+# Size in bytes. You can also use units like 1G, 512MiB or 1000KB. See: `man fallocate`
+# The default is `false`, not installing a swapfile.
+swapfile_size: 1G
+
+# Enable external database access for third party integrations
+#postgres_listen_addresses:
+#  - '*'
+#
+#custom_hba_entries:
+#  - { type: hostssl, database: "{{ db }}", user: zapier, address: '54.86.9.50/32', auth_method: md5 }
+#
+#custom_application_env_vars: |
+#  OFN_FEATURE_CONNECT_AND_LEARN: "true"
+>>>>>>> removed hosts, added staging-hto

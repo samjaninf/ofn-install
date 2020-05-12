@@ -151,6 +151,17 @@ fr-prod
 uk-prod
 de-prod
 
+# Harvest To Order
+
+[hto-prod]
+www.harvesttoorder.com
+
+[hto-staging]
+staging.harvesttoorder.com ansible_host=140.82.3.14
+
+[hto:children]
+hto-prod
+
 #------------------------------------------------------------------------------
 # America
 
@@ -174,6 +185,7 @@ au-staging
 uk-staging
 fr-staging
 es-staging
+hto-staging
 
 #------------------------------------------------------------------------------
 # All
@@ -191,3 +203,4 @@ fr
 de
 be
 za
+hto
