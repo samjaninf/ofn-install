@@ -2,6 +2,7 @@
 domain: staging.harvesttoorder.com
 host_id: hto-staging # country initials (eg uk, es, de) and environment (default is prod)
 rails_env: staging
+security_ssh_permit_root_login: "yes"
 
 admin_email: admin@pegas.io
 
@@ -18,6 +19,7 @@ unicorn_timeout: 120
 # Size in bytes. You can also use units like 1G, 512MiB or 1000KB. See: `man fallocate`
 # The default is `false`, not installing a swapfile.
 swapfile_size: 1G
+#
 # Enable external database access for third party integrations
 #postgres_listen_addresses:
 #  - '*'
