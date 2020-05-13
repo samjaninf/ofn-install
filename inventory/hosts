@@ -151,6 +151,7 @@ fr-prod
 uk-prod
 de-prod
 
+#------------------------------------------------------------------------------
 # Harvest To Order
 
 [hto-prod]
@@ -185,7 +186,6 @@ au-staging
 uk-staging
 fr-staging
 es-staging
-hto-staging
 
 #------------------------------------------------------------------------------
 # All
@@ -203,4 +203,3 @@ fr
 de
 be
 za
-hto
