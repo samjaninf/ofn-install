@@ -162,6 +162,7 @@ staging.harvesttoorder.com ansible_host=140.82.3.14
 
 [hto:children]
 hto-prod
+hto-staging
 
 #------------------------------------------------------------------------------
 # America
@@ -177,6 +178,7 @@ us-prod
 europe
 america
 au-prod
+hto-prod
 
 #------------------------------------------------------------------------------
 # Staging Servers
@@ -186,6 +188,7 @@ au-staging
 uk-staging
 fr-staging
 es-staging
+hto-staging
 
 #------------------------------------------------------------------------------
 # All
@@ -203,3 +206,4 @@ fr
 de
 be
 za
+hto

@@ -1,5 +1,4 @@
 ---
-
 # User name and password for running ansible on host
 user: ofn-admin
 
@@ -24,13 +23,11 @@ git_version: "{{ github_key.split(':')[1] }}"
 
 l10n_git_version: HEAD
 
-
 #----------------------------------------------------------------------
 # Default values (should be overridden in each server config)
 rails_env: staging
 host_id: ofn-staging
 admin_email: "admin@{{ domain }}"
-
 
 #----------------------------------------------------------------------
 # security role variables
@@ -77,12 +74,30 @@ postgres_encoding: en_US.utf8
 # to the defaults if present. Make sure you use the "list" notation with the dashes!
 
 default_hba_entries:
-  - {type: local, database: replication, user: ofn_data, auth_method: md5}
-  - {type: host, database: replication, user: ofn_data, address: '127.0.0.1/32', auth_method: md5}
-  - {type: local, database: all, user: postgres, auth_method: peer}
-  - {type: local, database: all, user: all, auth_method: peer}
-  - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5}
-  - {type: host, database: all, user: all, address: '::1/128', auth_method: md5}
+  - { type: local, database: replication, user: ofn_data, auth_method: md5 }
+  - {
+      type: host,
+      database: replication,
+      user: ofn_data,
+      address: "127.0.0.1/32",
+      auth_method: md5,
+    }
+  - { type: local, database: all, user: postgres, auth_method: peer }
+  - { type: local, database: all, user: all, auth_method: peer }
+  - {
+      type: host,
+      database: all,
+      user: all,
+      address: "127.0.0.1/32",
+      auth_method: md5,
+    }
+  - {
+      type: host,
+      database: all,
+      user: all,
+      address: "::1/128",
+      auth_method: md5,
+    }
 
 custom_hba_entries: []
 
@@ -131,7 +146,6 @@ pid_path: "{{ shared_path }}/pids"
 sock_path: "{{ shared_path }}/sock"
 l10n_path: "{{ shared_path }}/l10n"
 
-
 #----------------------------------------------------------------------
 # Logrotate options
 
@@ -141,22 +155,22 @@ logrotate_applications:
       - logs:
           - "{{ current_path }}/log/*.log"
         options:
-          - weekly        # rotate weekly
-          - rotate 4     # delete logs older than 4 rotations
-          - compress      # compress rotated logs
-          - missingok     # ignore missing logs
-          - notifempty    # don't rotate if empty
-          - copytruncate  # copy the log, then empty the active logfile
+          - weekly # rotate weekly
+          - rotate 4 # delete logs older than 4 rotations
+          - compress # compress rotated logs
+          - missingok # ignore missing logs
+          - notifempty # don't rotate if empty
+          - copytruncate # copy the log, then empty the active logfile
 
   - name: postgres_queries
     definitions:
       - logs:
           - "/var/log/pg_log/*.log"
         options:
-          - daily         # run daily
-          - rotate 0      # don't rotate files
-          - nocreate      # don't replace log files
-        lastaction:       # delete log files older than 1 day
+          - daily # run daily
+          - rotate 0 # don't rotate files
+          - nocreate # don't replace log files
+        lastaction: # delete log files older than 1 day
           - "find /var/log/pg_log/ -name '*.log' -mtime +1 -exec rm {};"
 
 #----------------------------------------------------------------------
@@ -304,4 +318,4 @@ nginx_configs:
     - upstream unicorn { server unix:{{ unicorn_sock }} fail_timeout=0; }
 
 # Use python2.7 interpeter
-ansible_python_interpreter: '/usr/bin/python2.7'
+ansible_python_interpreter: "/usr/bin/python2.7"
