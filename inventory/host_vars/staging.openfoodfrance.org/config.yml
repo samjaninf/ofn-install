@@ -10,4 +10,8 @@ mail_domain: openfoodfrance.org
 
 unicorn_timeout: 120
 
-disable_datadog: true
+users_sysadmin:
+  - "{{ core_devs }}"
+  - paco
+  - hugo
+  - filipe

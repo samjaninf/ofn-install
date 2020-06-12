@@ -8,4 +8,7 @@ admin_email: dev.ofnuk@gmail.com
 
 unicorn_timeout: 120
 
-disable_datadog: true
+users_sysadmin:
+  - "{{ core_devs }}"
+  - lindhop
+  - filipe

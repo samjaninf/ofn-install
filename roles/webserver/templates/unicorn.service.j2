@@ -7,18 +7,14 @@ Description=Open Food Network unicorn server
 Type=forking
 User=openfoodnetwork
 WorkingDirectory={{ current_path }}
-Environment=RAILS_ENV={{ rails_env }}
-
-{% if skylight_authentication is defined %}
-  Environment=SKYLIGHT_AUTHENTICATION={{ skylight_authentication }}
-{% endif %}
+EnvironmentFile={{ shared_path }}/unicorn_environment
 
 SyslogIdentifier=openfoodnetwork-unicorn
 PIDFile={{ unicorn_pid }}
 
-ExecStart={{ bundle_path }} exec unicorn -D -c {{ unicorn_config }} -E {{ rails_env }}
+ExecStart={{ bundle_path }} exec --keep-file-descriptors unicorn -D -c {{ unicorn_config }} -E {{ rails_env }}
 ExecStop=/bin/kill -QUIT $MAINPID
-ExecReload=/bin/kill -HUP $MAINPID
+ExecReload=/bin/kill -USR2 $MAINPID
 
 [Install]
 WantedBy=multi-user.target
