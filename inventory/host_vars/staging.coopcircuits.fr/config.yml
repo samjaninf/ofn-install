@@ -1,17 +1,16 @@
 ---
 
-domain: staging.openfoodfrance.org
+domain: staging.coopcircuits.fr
 host_id: fr-staging
 rails_env: staging
 
-admin_email: admin@openfoodfrance.org
+admin_email: admin@coopcircuits.fr
 
-mail_domain: openfoodfrance.org
+mail_domain: coopcircuits.fr
 
 unicorn_timeout: 120
 
 users_sysadmin:
   - "{{ core_devs }}"
   - paco
-  - hugo
   - filipe
