@@ -143,7 +143,6 @@ backup_path: "{{ app_path }}/backups"
 releases_path: "{{ app_path }}/releases-old"
 rollback_path: "{{ app_path }}/rollback"
 rollback_sql_path: "{{ app_path }}/rollback.sql.gz"
-assets_path: "{{ shared_path }}/assets"
 system_path: "{{ shared_path }}/system"
 images_path: "{{ shared_path }}/images"
 files_path: "{{ shared_path }}/files"
@@ -215,13 +214,10 @@ memcached_value_max_megabytes: 4
 # Core devs: users named here will have SSH access on all instances
 
 core_devs:
-  - richard
-#  - maikel
-#  - pau
-#  - enricostn
-#  - luis
-#  - matt
-#  - kristina
+  - maikel
+  - pau
+  - matt
+  - andy
 
 #----------------------------------------------------------------------
 # nginx config
@@ -317,6 +313,7 @@ nginx_sites:
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Request-Start "t=${msec}";
         proxy_redirect off;
         proxy_pass http://unicorn;
       }
