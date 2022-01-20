@@ -1,0 +1,13 @@
+---
+domain: openfoodnetwork.org.za
+host_id: za-prod
+rails_env: production
+
+mail_domain: openfoodnetwork.org.za
+
+certbot_domains:
+  - openfoodnetwork.org.za
+  - www.openfoodnetwork.org.za
+
+unicorn_workers: 2
+swapfile_size: 1G

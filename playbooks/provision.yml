@@ -38,8 +38,8 @@
       become: yes
       tags: swapfile
 
-    - role: unicorn_user # Create unprivileged user to run unicorn
-      tags: unicorn_user
+    - role: app_user # Create unprivileged user to run the app
+      tags: app_user
 
     - role: common # Install common apps and libraries, and setup shell.
       tags: common
@@ -56,14 +56,14 @@
         version: v1.0.0
         default_ruby: "{{ ruby_version }}"
         rubies: "{{ ruby_versions }}"
-
+      rbenv_set_vars: false
       rbenv_users:
-        - "{{ unicorn_user }}"
+        - "{{ app_user }}"
       tags: ruby
 
     - role: app # Build the app directory structure and support files.
       become: yes
-      become_user: "{{ unicorn_user }}"
+      become_user: "{{ app_user }}"
       tags: app
 
     - role: yarn
@@ -74,7 +74,16 @@
       become: yes
       become_user: root
       tags: dbserver
-      db_user_roles: CREATEDB,REPLICATION
+
+    - role: libre_ops.multi_redis
+      vars:
+        multiredis_disable_default_instance: false
+      become: yes
+      become_user: root
+      tags: redis
+
+    - role: sidekiq
+      tags: sidekiq
 
     - role: coopdevs.certbot_nginx
       become: yes

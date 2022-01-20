@@ -16,7 +16,7 @@
   hosts: ofn_servers
   remote_user: "{{ user }}"
   become: yes
-  become_user: "{{ unicorn_user }}"
+  become_user: "{{ app_user }}"
 
   handlers:
     - include: ../roles/shared_handlers/handlers/main.yml
@@ -35,27 +35,22 @@
           become: yes
           become_user: root
 
-        - name: stop delayed job
-          service:
-            name: delayed_job_{{ app }}
-            state: stopped
-          become: yes
-          become_user: root
+      - name: stop sidekiq
+        service:
+          name: sidekiq
+          state: stopped
+        become: yes
+        become_user: root
 
         - include_role:
             name: deploy
 
         - meta: flush_handlers # Ensure handlers run successfully before reporting success
 
-        - name: refresh products cache
-          command: "{{ bundle_path }} exec rake ofn:cache:warm_products"
-          args:
-            chdir: "{{ current_path }}"
-
-        - name: disable maintenance mode
-          import_role:
-            name: maintenance_mode
-            tasks_from: disable
+      - name: disable maintenance mode
+        import_role:
+          name: maintenance_mode
+          tasks_from: disable
 
         # - name: Notify Slack of successful deployment
         #   slack:
